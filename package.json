@@ -1,6 +1,7 @@
 {
   "name": "prometer",
   "devDependencies": {
+    "@bazel/bazelisk": "^1.7.3",
     "@bazel/typescript": "^2.2.2"
   },
   "dependencies": {
