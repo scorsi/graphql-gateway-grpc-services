@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package io.prometer.reviews;
+
+option go_package = "github.com/adfinitas-app/prometer/models/reviews";
+
+message ReviewModel {
+  string id = 1;
+  string productId = 2;
+  string userName = 3;
+  int32 rating = 4;
+  string text = 5;
+}
+
+message ReviewRequest {
+  string reviewId = 1;
+}
+message ReviewsRequest {
+  repeated string reviewIds = 1;
+}
+
+message ProductRequest {
+  string productId = 1;
+}
+message ProductsRequest {
+  repeated string productIds = 1;
+}
+
+message ReviewResponse {
+  ReviewModel review = 1;
+}
+message ReviewsResponse {
+  repeated ReviewModel reviews = 1;
+}
+
+service ReviewService {
+  rpc GetReview(ReviewRequest) returns (ReviewResponse) {}
+  rpc GetReviews(ReviewsRequest) returns (ReviewsResponse) {}
+
+  rpc GetReviewsByProduct(ProductRequest) returns (ReviewsResponse) {}
+  rpc GetReviewsByProducts(ProductsRequest) returns (ReviewsResponse) {}
+}

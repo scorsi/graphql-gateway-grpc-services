@@ -1,0 +1,6 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/adfinitas-app/prometer
+gazelle(name = "gazelle")
+
+exports_files(["tsconfig.json"], visibility = ["//visibility:public"])

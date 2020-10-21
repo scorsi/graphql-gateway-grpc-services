@@ -1,0 +1,49 @@
+sources:
+  - name: ReviewService
+    handler:
+      grpc:
+        endpoint: localhost:50053
+        protoFilePath:
+          file: reviews/review.proto
+          load:
+            includeDirs:
+              - ./models
+        serviceName: Review
+        packageName: io.prometer.reviews
+
+  - name: ProductService
+    handler:
+      grpc:
+        endpoint: localhost:50052
+        protoFilePath:
+          file: products/product.proto
+          load:
+            includeDirs:
+              - ./models
+        serviceName: Product
+        packageName: io.prometer.products
+
+additionalTypeDefs: |
+  extend type ProductModel {
+    reviews: [ReviewModel]
+  }
+
+additionalResolvers:
+#  - type: ProductModel
+#    field: reviews
+#    requiredSelectionSet: |
+#      {
+#        id
+#      }
+#    targetSource: ReviewService
+#    targetMethod: reviewServiceGetReviewsByProduct
+#    returnData: data
+#    args:
+#      input.productId: "{root.id}"
+  - ./additional-resolvers.js
+
+transforms:
+  - cache:
+      - field: Query.*
+        invalidate:
+          ttl: 60
